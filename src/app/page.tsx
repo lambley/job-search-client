@@ -1,11 +1,15 @@
 import React from "react";
 import { getJobs } from "./lib/api";
+import { GetJobsParams, JobDbResponse } from "../../types/jobSearchApiTypes";
 
 export default function Home() {
-  const getRecentJobs = async (results_per_page, what, where) => {
+  const getRecentJobs = async ({
+    results_per_page,
+    what,
+    where,
+  }: GetJobsParams) => {
     try {
       const res = await getJobs({ results_per_page, what, where });
-      console.log(res);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -14,8 +18,12 @@ export default function Home() {
   };
 
   const renderJobs = async () => {
-    const jobs = await getRecentJobs(3, "javascript", "london");
-    return jobs.map((job) => (
+    const jobs = await getRecentJobs({
+      results_per_page: 3,
+      what: "javascript",
+      where: "london",
+    });
+    return jobs.map((job: JobDbResponse) => (
       <li key={job.id}>
         <h3 className="text-xl font-semibold">{job.title}</h3>
         <p>{job.description}</p>
@@ -32,20 +40,6 @@ export default function Home() {
         <div className="w-1/2 p-4 m-10 rounded border shadow-md min-h-[20rem]">
           <h2 className="text-2xl">Recent jobs</h2>
           {renderJobs()}
-          {/* <ul>
-            <li>
-              <h3 className="text-xl font-semibold">Job 1</h3>
-              <p>Job description</p>
-            </li>
-            <li className="mt-4">
-              <h3 className="text-xl font-semibold">Job 2</h3>
-              <p>Job description</p>
-            </li>
-            <li className="mt-4">
-              <h3 className="text-xl font-semibold">Job 3</h3>
-              <p>Job description</p>
-            </li>
-          </ul> */}
         </div>
 
         {/* Right Column */}
