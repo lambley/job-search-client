@@ -1,19 +1,21 @@
 import React from "react";
 import { getJobs } from "./lib/api";
 import { GetJobsParams, JobDbResponse } from "../../types/jobSearchApiTypes";
+import { emptyJobsResponse } from "./lib/emptyResponses";
 
 export default function Home() {
   const getRecentJobs = async ({
     results_per_page,
     what,
     where,
-  }: GetJobsParams) => {
+  }: GetJobsParams): Promise<JobDbResponse[]> => {
     try {
       const res = await getJobs({ results_per_page, what, where });
-      return res.data;
+      const { data } = res.data;
+      return data;
     } catch (error) {
       console.log(error);
-      return [];
+      return [emptyJobsResponse, emptyJobsResponse, emptyJobsResponse];
     }
   };
 
@@ -23,6 +25,7 @@ export default function Home() {
       what: "javascript",
       where: "london",
     });
+
     return jobs.map((job: JobDbResponse) => (
       <li key={job.id}>
         <h3 className="text-xl font-semibold">{job.title}</h3>
