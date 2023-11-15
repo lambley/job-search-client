@@ -1,6 +1,7 @@
 import React from "react";
+import Card from "@components/job/card";
 import { getJobs } from "./lib/api";
-import { GetJobsParams, JobDbResponse } from "types/jobSearchApiTypes";
+import type { GetJobsParams, JobDbResponse } from "types/jobSearchApiTypes";
 import { emptyJobsResponse } from "./lib/emptyResponses";
 
 export default function Home() {
@@ -27,10 +28,12 @@ export default function Home() {
     });
 
     return jobs.map((job: JobDbResponse) => (
-      <li key={job.id}>
-        <h3 className="text-xl font-semibold">{job.title}</h3>
-        <p>{job.description}</p>
-      </li>
+      <Card
+        key={job.id}
+        id={job.id}
+        title={job.title}
+        description={job.description}
+      />
     ));
   };
 
