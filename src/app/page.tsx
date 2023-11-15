@@ -27,14 +27,7 @@ export default function Home() {
       where: "london",
     });
 
-    return jobs.map((job: JobDbResponse) => (
-      <Card
-        key={job.id}
-        id={job.id}
-        title={job.title}
-        description={job.description}
-      />
-    ));
+    return jobs.map((job: JobDbResponse) => <Card key={job.id} {...job} />);
   };
 
   return (
