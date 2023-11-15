@@ -1,6 +1,6 @@
 import React from "react";
 import { getJobs } from "./lib/api";
-import { GetJobsParams, JobDbResponse } from "../../types/jobSearchApiTypes";
+import { GetJobsParams, JobDbResponse } from "types/jobSearchApiTypes";
 import { emptyJobsResponse } from "./lib/emptyResponses";
 
 export default function Home() {
