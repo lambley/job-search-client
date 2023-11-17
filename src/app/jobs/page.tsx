@@ -3,6 +3,7 @@ import Card from "@components/job/card";
 import { getJobs } from "@lib/api";
 import type { GetJobsParams, JobDbResponse } from "types/jobSearchApiTypes";
 import { emptyJobsResponse } from "@lib/emptyResponses";
+import { repeatElements } from "@lib/utils/arrayMethods";
 
 export default function Home() {
   const getRecentJobs = async ({
@@ -16,7 +17,7 @@ export default function Home() {
       return data;
     } catch (error) {
       console.log(error);
-      return [emptyJobsResponse, emptyJobsResponse, emptyJobsResponse];
+      return repeatElements(emptyJobsResponse, 3);
     }
   };
 
