@@ -5,7 +5,7 @@ import type { GetJobsParams, JobDbResponse } from "types/jobSearchApiTypes";
 import { emptyJobsResponse } from "@lib/emptyResponses";
 import { repeatElements } from "@lib/utils/arrayMethods";
 
-export default function Home() {
+export default function Jobs() {
   const getRecentJobs = async ({
     results_per_page,
     what,
@@ -14,6 +14,7 @@ export default function Home() {
     try {
       const res = await getJobs({ results_per_page, what, where });
       const { data } = res.data;
+
       return data;
     } catch (error) {
       console.log(error);
@@ -39,7 +40,7 @@ export default function Home() {
         {/* Left Column */}
         <div className="w-1/2 p-4 m-10 rounded border shadow-md min-h-[20rem]">
           <h2 className="text-2xl">Recent jobs</h2>
-          {renderJobs()}
+          <ul>{renderJobs()}</ul>
         </div>
 
         {/* Right Column */}
