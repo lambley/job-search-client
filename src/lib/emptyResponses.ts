@@ -1,4 +1,4 @@
-import { JobDbResponse } from "../../../types/jobSearchApiTypes";
+import { JobDbResponse } from "types/jobSearchApiTypes";
 
 const emptyJobsResponse: JobDbResponse = {
   id: 0,

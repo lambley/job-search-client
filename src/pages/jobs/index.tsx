@@ -1,37 +1,15 @@
 import React from "react";
-import Card from "@components/job/card";
+import Card from "src/components/job/card";
 import { getJobs } from "@lib/api";
 import type { GetJobsParams, JobDbResponse } from "types/jobSearchApiTypes";
 import { emptyJobsResponse } from "@lib/emptyResponses";
 import { repeatElements } from "@lib/utils/arrayMethods";
 
-export default function Jobs() {
-  const getRecentJobs = async ({
-    results_per_page,
-    what,
-    where,
-  }: GetJobsParams): Promise<JobDbResponse[]> => {
-    try {
-      const res = await getJobs({ results_per_page, what, where });
-      const { data } = res.data;
+type JobsProps = {
+  jobs: JobDbResponse[];
+};
 
-      return data;
-    } catch (error) {
-      console.log(error);
-      return repeatElements(emptyJobsResponse, 3);
-    }
-  };
-
-  const renderJobs = async () => {
-    const jobs = await getRecentJobs({
-      results_per_page: 3,
-      what: "javascript",
-      where: "london",
-    });
-
-    return jobs.map((job: JobDbResponse) => <Card key={job.id} {...job} />);
-  };
-
+export default function Jobs({ jobs }: JobsProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <h1 className="text-3xl font-bold text-center py-4">Jobs Page</h1>
@@ -40,7 +18,11 @@ export default function Jobs() {
         {/* Left Column */}
         <div className="w-1/2 p-4 m-10 rounded border shadow-md min-h-[20rem]">
           <h2 className="text-2xl">Recent jobs</h2>
-          <ul>{renderJobs()}</ul>
+          <ul>
+            {jobs.map((job: JobDbResponse) => (
+              <Card key={job.id} {...job} />
+            ))}
+          </ul>
         </div>
 
         {/* Right Column */}
@@ -55,4 +37,28 @@ export default function Jobs() {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  try {
+    const res = await getJobs({
+      results_per_page: 3,
+      what: "javascript",
+      where: "london",
+    });
+    const { data } = res.data;
+
+    return {
+      props: {
+        jobs: data,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    return {
+      props: {
+        jobs: repeatElements(emptyJobsResponse, 3),
+      },
+    };
+  }
 }
