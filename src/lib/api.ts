@@ -24,6 +24,15 @@ const refreshJobs = async (params: IGetJobsParams): Promise<AxiosResponse> => {
   }
 };
 
+const getAllJobs = async (): Promise<AxiosResponse> => {
+  try {
+    const res = await jobSearchApi.get(`api/v1/jobs`);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const getJobs = async (params: IGetJobsParams): Promise<AxiosResponse> => {
   const { what, where, results_per_page } = params;
 
@@ -47,4 +56,4 @@ const getJob = async (adzuna_id: string): Promise<AxiosResponse> => {
 };
 
 export default jobSearchApi;
-export { refreshJobs, getJobs, getJob };
+export { refreshJobs, getJobs, getAllJobs, getJob };
