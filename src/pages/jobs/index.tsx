@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import Card from "src/components/job/card";
 import { getJobs } from "@lib/api";
 import type { GetJobsParams, JobDbResponse } from "types/jobSearchApiTypes";
@@ -20,7 +21,9 @@ export default function Jobs({ jobs }: JobsProps) {
           <h2 className="text-2xl">Recent jobs</h2>
           <ul>
             {jobs.map((job: JobDbResponse) => (
-              <Card key={job.id} {...job} />
+              <Link key={job.id} href={`jobs/${job.adzuna_id}`}>
+                <Card {...job} />
+              </Link>
             ))}
           </ul>
         </div>
