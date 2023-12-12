@@ -1,8 +1,10 @@
 import React from "react";
 import Link from "next/link";
-import Card from "src/components/job/card";
-import { getJobs } from "@lib/api";
-import type { GetJobsParams, JobDbResponse } from "types/jobSearchApiTypes";
+import { GetStaticProps } from "next";
+import Card from "@components/job/card";
+import TopKeywords from "@components/job/topKeywords";
+import { getJobs, getTopKeywords } from "@lib/api";
+import type { JobDbResponse } from "types/jobSearchApiTypes";
 import { emptyJobsResponse } from "@lib/emptyResponses";
 import { repeatElements } from "@lib/utils/arrayMethods";
 
@@ -30,19 +32,14 @@ export default function Jobs({ jobs }: JobsProps) {
 
         {/* Right Column */}
         <div className="w-1/2 p-4 m-10 rounded border shadow-md min-h-[20rem]">
-          <h2 className="text-2xl">Hot Keywords</h2>
-          <ul>
-            <li className="mt-4">Keyword 1</li>
-            <li className="mt-4">Keyword 2</li>
-            <li className="mt-4">Keyword 3</li>
-          </ul>
+          <TopKeywords />
         </div>
       </div>
     </div>
   );
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps<JobsProps> = async () => {
   try {
     const res = await getJobs({
       results_per_page: 3,
@@ -64,4 +61,4 @@ export async function getStaticProps() {
       },
     };
   }
-}
+};

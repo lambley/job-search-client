@@ -55,5 +55,27 @@ const getJob = async (adzuna_id: string): Promise<AxiosResponse> => {
   }
 };
 
+const getTopKeywords = async (
+  limit?: number,
+  force_update?: string
+): Promise<AxiosResponse> => {
+  let urlBuilder = `api/v1/jobs/top-keywords`;
+
+  if (limit) {
+    urlBuilder += `?limit=${limit}`;
+  }
+
+  if (force_update) {
+    urlBuilder += `?force_update=${force_update}`;
+  }
+
+  try {
+    const res = await jobSearchApi.get(urlBuilder);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export default jobSearchApi;
-export { refreshJobs, getJobs, getAllJobs, getJob };
+export { refreshJobs, getJobs, getAllJobs, getJob, getTopKeywords };
