@@ -21,13 +21,13 @@ export default function Jobs({ jobs }: JobsProps) {
         {/* Left Column */}
         <div className="w-1/2 p-4 m-10 rounded border shadow-md min-h-[20rem]">
           <h2 className="text-2xl">Recent jobs</h2>
-          <ul>
-            {jobs.map((job: JobDbResponse) => (
-              <Link key={job.id} href={`jobs/${job.adzuna_id}`}>
+          {jobs.map((job: JobDbResponse) => (
+            <div key={job.id} className="my-4">
+              <Link href={`jobs/${job.adzuna_id}`}>
                 <Card {...job} />
               </Link>
-            ))}
-          </ul>
+            </div>
+          ))}
         </div>
 
         {/* Right Column */}
