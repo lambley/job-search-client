@@ -11,8 +11,8 @@ services:
       - .env
       - .env.local
     networks:
-      - app-network
+      - job-search-network
 
 networks:
-  app-network:
+  job-search-network:
     driver: bridge
