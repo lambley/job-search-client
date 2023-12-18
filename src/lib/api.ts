@@ -1,9 +1,13 @@
 import axios, { AxiosResponse } from "axios";
 
+const apiBaseUrl =
+  process.env.REACT_APP_API_BASE_URL || "http://job-search-backend";
+const apiPort = process.env.REACT_APP_API_PORT || "3000";
+const baseURL = `${apiBaseUrl}:${apiPort}`;
 const jobSearchApi = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL,
 });
-
+4;
 interface IGetJobsParams {
   results_per_page: number;
   what: string;
