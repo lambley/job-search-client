@@ -16,7 +16,7 @@ export default function TopKeywords() {
   }, []);
 
   const renderTopKeywordList = () => {
-    return topKeywords.map((keyword: string) => (
+    return topKeywords.map((keyword) => (
       <li className="mt-4" key={keyword}>
         {keyword}
       </li>
