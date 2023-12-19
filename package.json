@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p $NEXTJS_PORT",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p $NEXTJS_PORT",
     "lint": "next lint"
   },
   "dependencies": {
