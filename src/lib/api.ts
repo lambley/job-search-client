@@ -1,9 +1,10 @@
 import axios, { AxiosResponse } from "axios";
 
-const apiBaseUrl =
-  process.env.REACT_APP_API_BASE_URL || "http://job-search-backend";
-const apiPort = process.env.REACT_APP_API_PORT || "3000";
-const baseURL = `${apiBaseUrl}:${apiPort}`;
+// NOTE: NextJS in docker containers needs to reference the service name in server-side code OR use localhost for client-side code
+
+const baseURL =
+  process.env.NEXT_SERVER_API_URL || process.env.NEXT_PUBLIC_API_URL;
+
 const jobSearchApi = axios.create({
   baseURL,
 });
@@ -18,10 +19,10 @@ const refreshJobs = async (params: IGetJobsParams): Promise<AxiosResponse> => {
   const encodedWhat = encodeURIComponent(params.what);
   const encodedWhere = encodeURIComponent(params.where);
 
-  const encodedParams = `refresh?results_per_page=${params.results_per_page}&what=${encodedWhat}&where=${encodedWhere}`;
+  const encodedParams = `results_per_page=${params.results_per_page}&what=${encodedWhat}&where=${encodedWhere}`;
 
   try {
-    const res = await jobSearchApi.get(`api/v1/jobs/refresh${encodedParams}`);
+    const res = await jobSearchApi.get(`api/v1/jobs/refresh?${encodedParams}`);
     return res;
   } catch (error) {
     throw error;
@@ -30,7 +31,7 @@ const refreshJobs = async (params: IGetJobsParams): Promise<AxiosResponse> => {
 
 const getAllJobs = async (): Promise<AxiosResponse> => {
   try {
-    const res = await jobSearchApi.get(`api/v1/jobs`);
+    const res = await jobSearchApi.get(`jobs`);
     return res;
   } catch (error) {
     throw error;
@@ -77,7 +78,13 @@ const getTopKeywords = async (
     const res = await jobSearchApi.get(urlBuilder);
     return res;
   } catch (error) {
-    throw error;
+    console.log(error);
+    const res = {
+      data: {
+        keywords: ["failed", "to", "fetch"],
+      },
+    };
+    return res as AxiosResponse;
   }
 };
 
