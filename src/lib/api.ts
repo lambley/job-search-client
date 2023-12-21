@@ -8,7 +8,7 @@ const baseURL =
 const jobSearchApi = axios.create({
   baseURL,
 });
-4;
+
 interface IGetJobsParams {
   results_per_page: number;
   what: string;
