@@ -29,21 +29,28 @@ export default function Job({ job }: JobProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  let paths = [];
+
   try {
     const res = await getAllJobs();
-    const jobs: JobDbResponse[] = res.data.data;
+    const { data } = res.data;
 
-    const paths = jobs.map((job: JobDbResponse) => ({
+    paths = data.map((job: JobDbResponse) => ({
       params: { jobAdzunaId: job.adzuna_id.toString() },
     }));
 
-    return { paths, fallback: false };
+    return { paths, fallback: true };
   } catch (error) {
     console.error("Error fetching blog paths:", error);
 
-    return { paths: [{ params: { jobAdzunaId: "0" } }], fallback: false };
+    paths = repeatElements(
+      { params: { jobAdzunaId: "0" } },
+      100
+    ) as unknown as [];
   }
-};
+
+  return { paths, fallback: true };
+}
 
 export const getStaticProps: GetStaticProps<JobProps> = async (
   context: any
