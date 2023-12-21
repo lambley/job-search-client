@@ -4,6 +4,7 @@ import type { JobDbResponse } from "types/jobSearchApiTypes";
 export default function Card(props: JobDbResponse) {
   const {
     id,
+    adzuna_id,
     title,
     location,
     description,
@@ -49,7 +50,7 @@ export default function Card(props: JobDbResponse) {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
-              })}
+              })} || {adzuna_id}
             </h4>
           )}
         </div>
