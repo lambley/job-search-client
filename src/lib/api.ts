@@ -31,7 +31,7 @@ const refreshJobs = async (params: IGetJobsParams): Promise<AxiosResponse> => {
 
 const getAllJobs = async (): Promise<AxiosResponse> => {
   try {
-    const res = await jobSearchApi.get(`jobs`);
+    const res = await jobSearchApi.get(`api/v1/jobs`);
     return res;
   } catch (error) {
     throw error;
