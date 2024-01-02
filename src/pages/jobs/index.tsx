@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { GetStaticProps } from "next";
 import Card from "@components/job/card";
 import TopKeywords from "@components/job/topKeywords";
-import { getJobs, refreshJobs } from "@lib/api";
+import { refreshJobs, recentJobs } from "@lib/api";
 import type { JobDbResponse } from "types/jobSearchApiTypes";
 import { emptyJobsResponse } from "@lib/emptyResponses";
 import { repeatElements } from "@lib/utils/arrayMethods";
@@ -13,16 +13,57 @@ type JobsProps = {
 };
 
 export default function Jobs({ jobs }: JobsProps) {
-  const handleRefreshJobs = async () => {
+  const [reload, setReload] = useState(false);
+  const [clientSideJobsList, setClientSideJobsList] =
+    useState<JobDbResponse[]>(jobs);
+
+  useEffect(() => {
+    if (reload) {
+      handleReload();
+    }
+  }, [reload]);
+
+  // get new jobs for cards - client-side
+  const updateJobs = async () => {
+    try {
+      const res = await recentJobs(3);
+      const { data } = res.data;
+      setClientSideJobsList(data);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    }
+  };
+
+  // fetch new jobs from API, rather than re-fetch recent jobs
+  const clientSideRefreshJobs = async () => {
     try {
       const res = await refreshJobs({
         results_per_page: 3,
         what: "javascript",
         where: "london",
       });
-      const { data } = res.data;
-      console.log(data);
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error refreshing jobs:", error);
+    }
+
+    setReload(true);
+  };
+
+  const handleReload = () => {
+    updateJobs();
+    renderJobCards();
+    setReload(false);
+  };
+
+  const renderJobCards = () => {
+    const renderList = clientSideJobsList || jobs;
+    return renderList.map((job: JobDbResponse) => (
+      <div key={job.id} className="my-4">
+        <Link href={`jobs/${job.adzuna_id}`}>
+          <Card {...job} />
+        </Link>
+      </div>
+    ));
   };
 
   return (
@@ -30,7 +71,7 @@ export default function Jobs({ jobs }: JobsProps) {
       <h1 className="text-3xl font-bold text-center py-4">Jobs Page</h1>
 
       <button
-        onClick={handleRefreshJobs}
+        onClick={clientSideRefreshJobs}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
         Refresh Jobs
@@ -40,18 +81,12 @@ export default function Jobs({ jobs }: JobsProps) {
         {/* Left Column */}
         <div className="w-1/2 p-4 m-10 rounded border shadow-md min-h-[20rem]">
           <h2 className="text-2xl">Recent jobs</h2>
-          {jobs.map((job: JobDbResponse) => (
-            <div key={job.id} className="my-4">
-              <Link href={`jobs/${job.adzuna_id}`}>
-                <Card {...job} />
-              </Link>
-            </div>
-          ))}
+          {renderJobCards()}
         </div>
 
         {/* Right Column */}
         <div className="w-1/2 p-4 m-10 rounded border shadow-md min-h-[20rem]">
-          <TopKeywords/>
+          <TopKeywords />
         </div>
       </div>
     </div>
@@ -60,11 +95,7 @@ export default function Jobs({ jobs }: JobsProps) {
 
 export const getStaticProps: GetStaticProps<JobsProps> = async () => {
   try {
-    const res = await getJobs({
-      results_per_page: 3,
-      what: "javascript",
-      where: "london",
-    });
+    const res = await recentJobs(3);
     const { data } = res.data;
 
     return {
