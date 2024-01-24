@@ -11,9 +11,9 @@ const CustomNavbar = () => {
       className="border-bottom border-white pb-3"
     >
       <div className="m-3">
-        <Navbar.Brand href="/" className="p-3">
-          Home
-        </Navbar.Brand>
+        <Link href="/" passHref>
+          <Navbar.Brand className="p-3">Home</Navbar.Brand>
+        </Link>
         <Link href="/jobs" passHref className="p-3">
           Jobs
         </Link>
