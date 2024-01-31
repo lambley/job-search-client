@@ -3,10 +3,10 @@ import CustomNavbar from "../components/navbar";
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (
-    <>
+    <div className="window">
       <CustomNavbar />
       {children}
-    </>
+    </div>
   );
 };
 
