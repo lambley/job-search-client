@@ -58,34 +58,38 @@ export default function Jobs({ jobs }: JobsProps) {
   const renderJobCards = () => {
     const renderList = clientSideJobsList || jobs;
     return renderList.map((job: JobDbResponse) => (
-      <div key={job.id} className="my-4">
-        <Link href={`jobs/${job.adzuna_id}`}>
-          <Card {...job} />
-        </Link>
-      </div>
+      <>
+        <div key={job.id}>
+          <Link
+            href={`jobs/${job.adzuna_id}`}
+            style={{ color: "black", textDecoration: "none" }}
+          >
+            <Card {...job} />
+          </Link>
+        </div>
+        {renderList.indexOf(job) !== renderList.length - 1 && <hr />}
+      </>
     ));
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <h1 className="text-3xl font-bold text-center py-4">Jobs Page</h1>
+    <div className="window-body">
+      <h4>Jobs Page</h4>
 
-      <button
-        onClick={clientSideRefreshJobs}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      <button onClick={clientSideRefreshJobs}>Refresh Jobs</button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          width: "100%",
+        }}
       >
-        Refresh Jobs
-      </button>
-
-      <div className="flex-1 flex justify-center items-center">
-        {/* Left Column */}
-        <div className="w-1/2 p-4 m-10 rounded border shadow-md min-h-[20rem]">
-          <h2 className="text-2xl">Recent jobs</h2>
+        <div style={{ width: "50%", marginLeft: "8px", marginRight: "8px" }}>
+          <h4 className="text-2xl">Recent jobs</h4>
           {renderJobCards()}
         </div>
 
-        {/* Right Column */}
-        <div className="w-1/2 p-4 m-10 rounded border shadow-md min-h-[20rem]">
+        <div style={{ width: "50%", marginLeft: "8px", marginRight: "8px" }}>
           <TopKeywords />
         </div>
       </div>

@@ -16,11 +16,10 @@ export default function Job({ job }: JobProps) {
   const { jobAdzunaId } = router.query;
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-center py-4">Job Page</h1>
-      <div className="flex-1 flex justify-center items-center">
-        <div className="w-1/2 p-4 m-10 rounded border shadow-md min-h-[20rem]">
-          <h2 className="text-2xl">Job Details</h2>
+    <div className="window-body">
+      <h4>Job Page</h4>
+      <div>
+        <div>
           <Card {...job} />
         </div>
       </div>
@@ -50,7 +49,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   return { paths, fallback: true };
-}
+};
 
 export const getStaticProps: GetStaticProps<JobProps> = async (
   context: any

@@ -2,7 +2,11 @@ import React, { use, useEffect, useState } from "react";
 import { getTopKeywords } from "@lib/api";
 
 export default function TopKeywords() {
-  const [topKeywords, setTopKeywords] = useState<string[]>(["keyword1", "keyword2", "keyword3"]);
+  const [topKeywords, setTopKeywords] = useState<string[]>([
+    "keyword1",
+    "keyword2",
+    "keyword3",
+  ]);
 
   useEffect(() => {
     const fetchTopKeywords = async () => {
@@ -21,16 +25,16 @@ export default function TopKeywords() {
 
   const renderTopKeywordList = () => {
     return topKeywords.map((keyword) => (
-      <li className="mt-4" key={keyword}>
+      <p key={keyword} style={{ color: "black" }}>
         {keyword}
-      </li>
+      </p>
     ));
   };
 
   return (
     <>
-      <h2 className="text-2xl">Hot Keywords</h2>
-      <ul>{renderTopKeywordList()}</ul>
+      <h4>Hot Keywords</h4>
+      <div>{renderTopKeywordList()}</div>
     </>
   );
 }

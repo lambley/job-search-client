@@ -1,13 +1,15 @@
 import React from "react";
-import { Container } from "react-bootstrap";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="mx-auto text-center" style={{ width: 700 }}>
-        <h1 className="text-3xl">Job Search App Home Page</h1>
-        <p className="mx-auto">Some text here</p>
-      </div>
+    <div className="window-body">
+      <h4>Job Search App Home Page</h4>
+      <p>A playground app built with NestJS and NextJS</p>
+      <ul>
+        <li>Retrieves job adverts from Adzuna&apos;s API</li>
+        <li>Stores and processes the adverts to generate a list of advert keywords</li>
+        <li>Queues processing jobs using BullMQ and Redis</li>
+      </ul>
     </div>
   );
 }

@@ -35,23 +35,24 @@ export default function Card(props: JobDbResponse) {
 
   return (
     <div key={id}>
-      <h3 className="text-xl my-1 font-semibold">{toTitleCase(title)}</h3>
-      <div className="ms-1">
+      <p>{toTitleCase(title)}</p>
+      <div>
         <div>
-          <h4 className="my-1">
+          <p>
             {numberToCurrency(salary_min)} / {contract_type || "Not Specified"}
-          </h4>
-          <h4 className="my-1">{company}</h4>
+          </p>
+          <p>{company}</p>
         </div>
         <div>
           {created && (
-            <h4 className="my-1">
+            <p>
               {new Date(created).toLocaleDateString("en-GB", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
-              })} || {adzuna_id}
-            </h4>
+              })}{" "}
+              || {adzuna_id}
+            </p>
           )}
         </div>
         <p>{description}</p>
