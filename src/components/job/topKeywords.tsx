@@ -2,14 +2,18 @@ import React, { use, useEffect, useState } from "react";
 import { getTopKeywords } from "@lib/api";
 
 export default function TopKeywords() {
-  const [topKeywords, setTopKeywords] = useState([]);
+  const [topKeywords, setTopKeywords] = useState<string[]>(["keyword1", "keyword2", "keyword3"]);
 
   useEffect(() => {
     const fetchTopKeywords = async () => {
-      const res = await getTopKeywords(3);
-      const { data } = res.data;
+      try {
+        const res = await getTopKeywords(3);
+        const { data } = res.data;
 
-      setTopKeywords(data);
+        setTopKeywords(data);
+      } catch (error) {
+        console.error("Error fetching top keywords:", error);
+      }
     };
 
     fetchTopKeywords();

@@ -90,12 +90,15 @@ const getTopKeywords = async (
     return res;
   } catch (error) {
     console.log(error);
-    const res = {
-      data: {
-        keywords: ["failed", "to", "fetch"],
-      },
-    };
-    return res as AxiosResponse;
+    if ((error as any).code === "ECONNREFUSED") {
+      const defaultKeywords = ["failed", "to", "fetch"];
+      const res = {
+        data: {
+          keywords: defaultKeywords,
+        },
+      };
+      return res as AxiosResponse;
+    }
   }
 };
 
