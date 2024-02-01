@@ -58,17 +58,18 @@ export default function Jobs({ jobs }: JobsProps) {
   const renderJobCards = () => {
     const renderList = clientSideJobsList || jobs;
     return renderList.map((job: JobDbResponse) => (
-      <>
-        <div key={job.id}>
-          <Link
-            href={`jobs/${job.adzuna_id}`}
-            style={{ color: "black", textDecoration: "none" }}
-          >
-            <Card {...job} />
-          </Link>
-        </div>
-        {renderList.indexOf(job) !== renderList.length - 1 && <hr />}
-      </>
+      <ul
+        key={job.id}
+        className="tree-view"
+        style={{ padding: "8px 16px", marginBottom: "8px" }}
+      >
+        <Link
+          href={`jobs/${job.adzuna_id}`}
+          style={{ color: "black", textDecoration: "none" }}
+        >
+          <Card {...job} />
+        </Link>
+      </ul>
     ));
   };
 
@@ -84,12 +85,12 @@ export default function Jobs({ jobs }: JobsProps) {
           width: "100%",
         }}
       >
-        <div style={{ width: "50%", marginLeft: "8px", marginRight: "8px" }}>
+        <div style={{ width: "50%", margin: "8px 16px" }}>
           <h4 className="text-2xl">Recent jobs</h4>
           {renderJobCards()}
         </div>
 
-        <div style={{ width: "50%", marginLeft: "8px", marginRight: "8px" }}>
+        <div style={{ width: "50%", margin: "8px 16px" }}>
           <TopKeywords />
         </div>
       </div>

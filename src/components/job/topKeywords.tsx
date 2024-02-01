@@ -25,9 +25,13 @@ export default function TopKeywords() {
 
   const renderTopKeywordList = () => {
     return topKeywords.map((keyword) => (
-      <p key={keyword} style={{ color: "black" }}>
+      <ul
+        key={keyword}
+        className="tree-view"
+        style={{ color: "black", marginBottom: "8px" }}
+      >
         {keyword}
-      </p>
+      </ul>
     ));
   };
 
