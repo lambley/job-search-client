@@ -1,1 +1,8 @@
 @import "98.css";
+
+/* 98.css overrides */
+.window {
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
