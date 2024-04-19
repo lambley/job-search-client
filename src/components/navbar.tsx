@@ -4,7 +4,7 @@ import { Navbar, Nav } from "react-bootstrap";
 
 const CustomNavbar = () => {
   return (
-    <div className="title-bar">
+    <div className="title-bar" id="custom-navbar" aria-label="navigation">
       <div className="title-bar-text">
         <Link href="/" passHref style={{ color: "white", padding: "8px" }}>
           Home
