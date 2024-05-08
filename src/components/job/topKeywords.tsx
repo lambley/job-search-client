@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getTopKeywords } from "@lib/api";
 
 export default function TopKeywords() {
@@ -13,7 +13,6 @@ export default function TopKeywords() {
       try {
         const res = await getTopKeywords(3);
         const { data } = res.data;
-
         setTopKeywords(data);
       } catch (error) {
         console.error("Error fetching top keywords:", error);
@@ -25,11 +24,7 @@ export default function TopKeywords() {
 
   const renderTopKeywordList = () => {
     return topKeywords.map((keyword) => (
-      <ul
-        key={keyword}
-        className="tree-view"
-        style={{ color: "black", marginBottom: "8px" }}
-      >
+      <ul key={keyword} className="tree-view">
         {keyword}
       </ul>
     ));
